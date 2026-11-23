@@ -1,0 +1,263 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Public creator and messaging profile for a SNAP user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID of the user." },
+        "username": { "type": "string", "description": "Unique lowercase handle (3-30 chars)." },
+        "displayName": { "type": "string", "description": "Display name shown in chats and reels." },
+        "bio": { "type": "string", "description": "Creator biography." },
+        "avatarUrl": { "type": "string", "description": "Profile photo URL." },
+        "privateAccount": { "type": "boolean", "description": "Whether the account is private." },
+        "discoverable": { "type": "boolean", "description": "Whether the profile appears in creator search." },
+        "followersCount": { "type": "integer", "description": "Cached follower count." },
+        "followingCount": { "type": "integer", "description": "Cached following count." },
+        "reelsCount": { "type": "integer", "description": "Number of published reels." },
+        "blockedUserIds": { "type": "array", "description": "List of blocked user UIDs." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp of creation." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp of last update." }
+      },
+      "required": ["userId", "username", "displayName", "privateAccount", "discoverable", "followersCount", "followingCount", "reelsCount", "createdAt", "updatedAt"]
+    },
+    "UserPrivateSettings": {
+      "title": "UserPrivateSettings",
+      "description": "Owner-only PII and app preferences.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "readReceipts": { "type": "boolean" },
+        "lastSeenVisible": { "type": "boolean" },
+        "autoPlayNextReel": { "type": "boolean" },
+        "videoQuality": { "type": "string", "enum": ["auto", "1080p", "720p", "480p"] },
+        "dataSaver": { "type": "boolean" },
+        "fcmToken": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "readReceipts", "lastSeenVisible", "autoPlayNextReel", "videoQuality", "dataSaver", "createdAt", "updatedAt"]
+    },
+    "ChatThread": {
+      "title": "ChatThread",
+      "description": "WhatsApp-style 1:1 or group conversation metadata.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "peerAvatarUrl": { "type": "string" },
+        "groupChat": { "type": "boolean" },
+        "memberUids": { "type": "array" },
+        "participantNames": { "type": "object" },
+        "lastMessageText": { "type": "string" },
+        "lastMessageType": { "type": "string", "enum": ["text", "reel_share", "status_reply", "call", "system"] },
+        "lastMessageSenderId": { "type": "string" },
+        "unreadCount": { "type": "integer" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "groupChat", "memberUids", "lastMessageText", "lastMessageType", "lastMessageSenderId", "unreadCount", "createdBy", "createdAt", "updatedAt"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Message inside a SNAP chat thread, including shared reels.",
+      "type": "object",
+      "properties": {
+        "chatId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "memberUids": { "type": "array" },
+        "text": { "type": "string" },
+        "messageType": { "type": "string", "enum": ["text", "reel_share", "status_reply", "system"] },
+        "sharedReelId": { "type": "string" },
+        "sharedReelThumbnail": { "type": "string" },
+        "sharedReelCaption": { "type": "string" },
+        "sharedReelCreator": { "type": "string" },
+        "readBy": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["chatId", "senderId", "senderName", "memberUids", "text", "messageType", "createdAt"]
+    },
+    "StatusUpdate": {
+      "title": "StatusUpdate",
+      "description": "WhatsApp-style 24-hour status update.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "username": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "caption": { "type": "string" },
+        "mediaUrl": { "type": "string" },
+        "backgroundHex": { "type": "string" },
+        "visibility": { "type": "string", "enum": ["public", "followers"] },
+        "viewerIds": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "username", "caption", "backgroundHex", "visibility", "viewerIds", "createdAt"]
+    },
+    "CallLog": {
+      "title": "CallLog",
+      "description": "Voice or video call record between SNAP users.",
+      "type": "object",
+      "properties": {
+        "callerId": { "type": "string" },
+        "callerName": { "type": "string" },
+        "calleeId": { "type": "string" },
+        "calleeName": { "type": "string" },
+        "participantUids": { "type": "array" },
+        "callType": { "type": "string", "enum": ["voice", "video"] },
+        "status": { "type": "string", "enum": ["ringing", "connected", "completed", "missed", "declined"] },
+        "durationSeconds": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["callerId", "callerName", "calleeId", "calleeName", "participantUids", "callType", "status", "durationSeconds", "createdAt", "updatedAt"]
+    },
+    "Reel": {
+      "title": "Reel",
+      "description": "Short vertical 9:16 video reel metadata.",
+      "type": "object",
+      "properties": {
+        "creatorId": { "type": "string" },
+        "creatorUsername": { "type": "string" },
+        "creatorAvatarUrl": { "type": "string" },
+        "videoUrl": { "type": "string" },
+        "thumbnailUrl": { "type": "string" },
+        "caption": { "type": "string" },
+        "hashtags": { "type": "array" },
+        "musicTitle": { "type": "string" },
+        "musicArtist": { "type": "string" },
+        "musicLicenseId": { "type": "string" },
+        "durationSeconds": { "type": "integer" },
+        "visibility": { "type": "string", "enum": ["public", "followers", "private"] },
+        "moderationStatus": { "type": "string", "enum": ["approved", "flagged", "removed"] },
+        "copyrightVerified": { "type": "boolean" },
+        "likesCount": { "type": "integer" },
+        "commentsCount": { "type": "integer" },
+        "sharesCount": { "type": "integer" },
+        "savesCount": { "type": "integer" },
+        "viewsCount": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["creatorId", "creatorUsername", "videoUrl", "caption", "hashtags", "musicTitle", "musicArtist", "musicLicenseId", "durationSeconds", "visibility", "moderationStatus", "copyrightVerified", "likesCount", "commentsCount", "sharesCount", "savesCount", "viewsCount", "createdAt", "updatedAt"]
+    },
+    "ReelComment": {
+      "title": "ReelComment",
+      "description": "Comment or threaded reply on a SNAP Reel.",
+      "type": "object",
+      "properties": {
+        "reelId": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorUsername": { "type": "string" },
+        "authorAvatarUrl": { "type": "string" },
+        "text": { "type": "string" },
+        "parentCommentId": { "type": "string" },
+        "likesCount": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["reelId", "authorId", "authorUsername", "text", "likesCount", "createdAt"]
+    },
+    "ReelLike": {
+      "title": "ReelLike",
+      "description": "User like record for a SNAP Reel.",
+      "type": "object",
+      "properties": {
+        "reelId": { "type": "string" },
+        "userId": { "type": "string" },
+        "active": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["reelId", "userId", "active", "createdAt"]
+    },
+    "ReelSave": {
+      "title": "ReelSave",
+      "description": "User bookmark/favorite record for a SNAP Reel.",
+      "type": "object",
+      "properties": {
+        "reelId": { "type": "string" },
+        "userId": { "type": "string" },
+        "active": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["reelId", "userId", "active", "createdAt"]
+    },
+    "CreatorFollow": {
+      "title": "CreatorFollow",
+      "description": "Follow relationship between followerId and creatorId.",
+      "type": "object",
+      "properties": {
+        "followerId": { "type": "string" },
+        "creatorId": { "type": "string" },
+        "active": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["followerId", "creatorId", "active", "createdAt"]
+    },
+    "ReelReport": {
+      "title": "ReelReport",
+      "description": "Content moderation or copyright report submitted for a Reel.",
+      "type": "object",
+      "properties": {
+        "reelId": { "type": "string" },
+        "reporterId": { "type": "string" },
+        "reason": { "type": "string" },
+        "details": { "type": "string" },
+        "status": { "type": "string", "enum": ["submitted"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["reelId", "reporterId", "reason", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Public creator and chat profiles."
+    },
+    "/users/{userId}/private/{docId}": {
+      "schema": { "$ref": "#/entities/UserPrivateSettings" },
+      "description": "Owner-only PII and privacy/playback preferences."
+    },
+    "/chats/{chatId}": {
+      "schema": { "$ref": "#/entities/ChatThread" },
+      "description": "SNAP chat threads scoped to memberUids."
+    },
+    "/chats/{chatId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Messages in a SNAP chat thread with denormalized memberUids."
+    },
+    "/updates/{updateId}": {
+      "schema": { "$ref": "#/entities/StatusUpdate" },
+      "description": "WhatsApp-style status updates."
+    },
+    "/calls/{callId}": {
+      "schema": { "$ref": "#/entities/CallLog" },
+      "description": "Voice and video call history scoped to participantUids."
+    },
+    "/reels/{reelId}": {
+      "schema": { "$ref": "#/entities/Reel" },
+      "description": "SNAP Reels short videos."
+    },
+    "/reels/{reelId}/comments/{commentId}": {
+      "schema": { "$ref": "#/entities/ReelComment" },
+      "description": "Comments and threaded replies on a Reel."
+    },
+    "/reel_likes/{likeId}": {
+      "schema": { "$ref": "#/entities/ReelLike" },
+      "description": "User likes on Reels."
+    },
+    "/reel_saves/{saveId}": {
+      "schema": { "$ref": "#/entities/ReelSave" },
+      "description": "User saved/favorite Reels."
+    },
+    "/follows/{followId}": {
+      "schema": { "$ref": "#/entities/CreatorFollow" },
+      "description": "Creator follow graph."
+    },
+    "/reel_reports/{reportId}": {
+      "schema": { "$ref": "#/entities/ReelReport" },
+      "description": "User-submitted Reel moderation & copyright reports."
+    }
+  }
+}

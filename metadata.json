@@ -1,0 +1,6 @@
+{
+  "name": "SNAP",
+  "description": "SNAP messaging, status updates, calls, and SNAP Reels short-video platform powered by Firebase.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

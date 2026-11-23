@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">SNAP</string>
+    <string name="tagline">Instant Chats &amp; Vertical SNAP Reels</string>
+    <string name="nav_chats">Chats</string>
+    <string name="nav_updates">Updates</string>
+    <string name="nav_reels">Reels</string>
+    <string name="nav_calls">Calls</string>
+    <string name="nav_settings">Settings</string>
+    <string name="sign_in_google">Sign in with Google</string>
+    <string name="auth_subtitle">Encrypted-style messaging, live status updates, calls, and 9:16 SNAP Reels synced across your account.</string>
+    <string name="empty_chats_title">No conversations yet</string>
+    <string name="empty_chats_subtitle">Start a new SNAP chat or share a Reel directly with a friend.</string>
+    <string name="empty_reels_title">No SNAP Reels yet</string>
+    <string name="empty_reels_subtitle">Be the first to record a 15s, 30s, or 60s vertical Reel or upload from your gallery.</string>
+    <string name="empty_updates_title">No status updates</string>
+    <string name="empty_updates_subtitle">Share a quick 24-hour text or photo update with your contacts.</string>
+    <string name="empty_calls_title">No recent calls</string>
+    <string name="empty_calls_subtitle">Start a crisp voice or video call with anyone on SNAP.</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
+</resources>
